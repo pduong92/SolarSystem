@@ -23,7 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 
-
+import javafx.scene.SubScene;
+import javafx.scene.Group;
 
 public class SolarSystemGUI extends Application{
 	
@@ -50,15 +51,19 @@ public class SolarSystemGUI extends Application{
     //Variable for our margin spacing
     private Insets spacing = new Insets(10, 50, 10, 50);
     
-    private SolarSystem sol = new SolarSystem(750,500);
-
+    //private SolarSystem sol = new SolarSystem(750,500);
+    private SolarSystem sol = new SolarSystem();
+    
+    private SubScene GUIscene;
+    
     //Method to Display all planet data on the table grid
     public void displayDataTable() {
     	Planet index;
-    	for(int i = 1; i < 6; i++)
+    	Planet[] planets = sol.getPlanets();
+    	for(int i = 1; i < planets.length; i++)
     	{
-    		index = sol.planets[i];
-    		System.out.println(index);
+    		index = planets[i];
+//    		System.out.println(index);
     		if(index != null)
     		{
     			dataTable.add(new Label(index.getName()), 0, i);
@@ -152,24 +157,17 @@ public class SolarSystemGUI extends Application{
 	
 	
     public void start(Stage primaryStage) {
-	FlowPane leftPane = createLeftPane(); 
-	FlowPane rightPane = createRightPane();
+//	FlowPane leftPane = createLeftPane(); 
+//	FlowPane rightPane = createRightPane();
 	
 	HBox bottomPane = new HBox();
-	bottomPane.getChildren().addAll(leftPane, rightPane);
+	bottomPane.getChildren().addAll(createLeftPane(), createRightPane());
 	
-	//VBox fullPane = new VBox();
-	
-        
-        /* wound up trying to add solarsystem and leftPane to both
-         fullPane, and a group I created, but couldn't figure out
-         how to control layout  */
-        //fullPane.getChildren().addAll(sol.pane, bottomPane);
+	GUIscene = new SubScene(bottomPane, 1200, 200);
 	
 	BorderPane fullPane = new BorderPane();
-	fullPane.setCenter(sol.pane);
-	fullPane.setBottom(bottomPane);
-	//fullPane.setAlignment(bottomPane, Pos.BOTTOM_CENTER);
+	fullPane.setCenter(sol.getSubScene());
+	fullPane.setBottom(GUIscene);
 	
         
         // revamped the action listener to talk between GUI and SolarSystem

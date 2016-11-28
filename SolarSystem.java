@@ -9,23 +9,50 @@
 import javafx.scene.layout.*;
 import javafx.scene.transform.Rotate;
 
+import javafx.scene.SubScene;
+import javafx.scene.Group;
+
+import javafx.scene.Camera;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.paint.Color;
 
 public class SolarSystem {
 
     private final double SIZE = 300;
-    public Pane pane;
+    
+    private SubScene subscene;
+    private Group g;
+    
     private Rotate rx = new Rotate(0, Rotate.X_AXIS);
     private Rotate ry = new Rotate(0, Rotate.Y_AXIS);
-    public Planet[] planets = new Planet[6];  // holds 5 planets at index 1-5, and Sun at index 0.
+    private Planet[] planets = new Planet[6];  // holds 5 planets at index 1-5, and Sun at index 0.
     
     //SolarSystem constructor. Automatically creates Sun with radius of 25
-    public SolarSystem (double h, double w){
-    	pane = new Pane();
-    	pane.setPrefSize(h, w);
-   // 	pane.getTransforms().addAll(rx,ry);
-   // 	rx.setAngle(75);
-   // 	ry.setAngle(85);
-        createPlanet("25", "0", "YELLOW", "0", "Sun");        
+    public SolarSystem (){
+    	g = new Group();
+    	g.getTransforms().addAll(rx, ry);
+    	subscene = new SubScene(g, 1200, 500, true, SceneAntialiasing.BALANCED);
+    	subscene.setFill(Color.BLACK);
+
+    	rx.setAngle(90);
+    	ry.setAngle(25);
+    	
+    	PerspectiveCamera camera = new PerspectiveCamera();
+        camera.setFarClip(1000);
+        camera.setTranslateZ(-250);
+        subscene.setCamera(camera);
+    	
+        createPlanet("80", "0", "YELLOW", "0", "Sun");
+        
+        subscene.setStyle("-fx-background-image: url('" + "milky-way-galaxy.jpg" + "'); " +
+                   "-fx-background-position: center center; " +
+                   "-fx-background-repeat: stretch;");
+        
+     //   Image bg = new Image("milky-way-galaxy.jpg");
+     //   pane.setBackground(new Background(new BackgroundImage(bg, BackgroundRepeat.SPACE, BackgroundRepeat.SPACE, null, null)));
     }
     
     //createPlanet method called by Actionlistener in GUI.
@@ -37,28 +64,26 @@ public class SolarSystem {
         
         if(index == 0)
         {  	
-        	//planets[index].getPlanetBody().setTranslateX(pane.widthProperty().divide(2).getValue());
-        	//planets[index].getPlanetBody().setTranslateY(pane.heightProperty().divide(2).getValue());
+        	planets[index].getPlanetBody().setTranslateX(subscene.widthProperty().divide(2).getValue());
+        	planets[index].getPlanetBody().setTranslateY(subscene.heightProperty().divide(2).getValue());
         	
-        	planets[index].getPlanetBody().setTranslateX(539.5);
-        	planets[index].getPlanetBody().setTranslateY(210.5);
+        	//planets[index].getPlanetBody().setTranslateX(539.5);
+        	//planets[index].getPlanetBody().setTranslateY(210.5);
         }
         else
         {
-        	planets[index].getOrbit().centerXProperty().bind(pane.widthProperty().divide(2));
-        	planets[index].getOrbit().centerYProperty().bind(pane.heightProperty().divide(2));
+        	planets[index].getOrbit().centerXProperty().bind(subscene.widthProperty().divide(2));
+        	planets[index].getOrbit().centerYProperty().bind(subscene.heightProperty().divide(2));
         }
-        //System.out.println(pane.widthProperty().divide(2).getValue());
-        //System.out.println(pane.heightProperty().divide(2).getValue());
         
         // adds planet to SolarSystem's pane.
-        pane.getChildren().addAll(planets[index].getPlanetBody(), planets[index].getOrbit());
-        //pane.getChildren().addAll(planets[orbit].getPlanetBody(), currentOrbit);
+        g.getChildren().addAll(planets[index].getPlanetBody(), planets[index].getOrbit());
         
         if(index != 0)
         	planets[index].animation.play(); //starts animation
     }
     
-    public Pane getPane() { return pane; }
+    public SubScene getSubScene() { return subscene; }
     
+    public Planet[] getPlanets() { return planets; } 
 }

@@ -20,7 +20,7 @@ public class Planet {
     private Sphere planetBody;
     private int speed;
     private double radius;
-    private final double SIZE = 300; // just a standardized reference
+    private final double SIZE = 500; // just a standardized reference
     
     public Animation animation;
     
@@ -29,19 +29,6 @@ public class Planet {
     private String sizeStr;
     private String speedStr;
     private String orbitStr;
-
-/*
-    public Planet (int radius, double orbit, Color color, int speed, String name){
-        this.orbit = createCircle(orbit * 300);
-        planetBody = new Sphere(radius);
-        this.radius = radius;
-        planetBody.setMaterial(new PhongMaterial(color));
-        this.speed = speed;
-        this.name = name;
-        animation = new ParallelTransition(
-            createTransition(this.orbit, this.planetBody, Duration.seconds(speed)));
-    }
-*/ 
     
     public Planet (String sizeInput, String orbitInput, String colorInput, String speedInput, String nameInput){
     	
@@ -53,14 +40,14 @@ public class Planet {
     	
     	int radius;
         switch (sizeInput){
-            case "Small": radius = 10;
+            case "Small": radius = 15;
                 break;
-            case "Medium": radius = 15;
+            case "Medium": radius = 30;
                 break;
-            case "Large": radius = 20;
+            case "Large": radius = 45;
                 break;
             default:
-            	radius = 25;
+            	radius = Integer.parseInt(sizeInput);
         }
         
         Color color = Color.YELLOW;
@@ -85,7 +72,7 @@ public class Planet {
                 break;
             case "medium" : speed = 6;
                 break;
-            case "fast" : speed = 3;
+            case "fast" : speed = 1;
                 break;
             default:
             	speed = 10;
@@ -95,7 +82,7 @@ public class Planet {
     	
     	
     	
-        this.orbit = createCircle(orbitData * 300);
+        this.orbit = createCircle(orbitData * SIZE);
         planetBody = new Sphere(radius);
         this.radius = radius;
         planetBody.setMaterial(new PhongMaterial(color));
