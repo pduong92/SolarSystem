@@ -33,6 +33,8 @@ public class SolarSystemGUI extends Application{
     private String[] speeds = {"Slow", "Medium", "Fast"};
     private String[] positions = {"1", "2", "3", "4", "5"};
 	
+    //Variable for our margin spacing
+    private Insets spacing = new Insets(10, 50, 10, 50);
     
     /****Variables for out Left Pane***/
     //Text Field for user to input Planet title
@@ -45,32 +47,39 @@ public class SolarSystemGUI extends Application{
     //Button to Create a Planet
     private Button btnCreate = new Button("Create Planet");
     
+    /***Variables for out Right Pane***/
     //Grid for our Data Table
     private GridPane dataTable = new GridPane();
     
-    //Variable for our margin spacing
-    private Insets spacing = new Insets(10, 50, 10, 50);
+    //Array to store labels/values for the data table
+    private Label[][] data = new Label[5][5];
+    
+    //Column Constraint for the data table
+    ColumnConstraints colSpacing = new ColumnConstraints(75);
     
     //private SolarSystem sol = new SolarSystem(750,500);
     private SolarSystem sol = new SolarSystem();
     
     private SubScene GUIscene;
     
+    
     //Method to Display all planet data on the table grid
     public void displayDataTable() {
+    	int count = 0;
     	Planet index;
     	Planet[] planets = sol.getPlanets();
     	for(int i = 1; i < planets.length; i++)
     	{
     		index = planets[i];
-//    		System.out.println(index);
     		if(index != null)
     		{
-    			dataTable.add(new Label(index.getName()), 0, i);
-    			dataTable.add(new Label(index.getColorStr()), 1, i);
-    			dataTable.add(new Label(index.getSizeStr()), 2, i);
-    			dataTable.add(new Label(index.getSpeedStr()), 3, i);
-    			dataTable.add(new Label(index.getOrbitStr()), 4, i);  			
+    			data[count][0].setText(index.getName());
+    			data[count][1].setText(index.getColorStr());
+    			data[count][2].setText(index.getSizeStr());
+    			data[count][3].setText(index.getSpeedStr());
+    			data[count][4].setText(index.getOrbitStr()); 
+    			
+    			count++;
     		}
     	}
     }
@@ -89,10 +98,16 @@ public class SolarSystemGUI extends Application{
   		dataTable.add(new Label("Speed"), 3, 0);
   		dataTable.add(new Label("Position"), 4, 0);
   		
-  		ColumnConstraints colSpacing = new ColumnConstraints(75);
-  		
   		dataTable.getColumnConstraints().addAll(colSpacing, colSpacing, colSpacing, colSpacing, colSpacing);
-  	
+  		
+  		for(int i = 0; i < data.length; i++)
+  		{
+  			for(int j = 0; j < data.length; j++)
+  			{
+  				data[i][j] = new Label();
+  				dataTable.add(data[i][j], j, i+1);
+  			}
+  		}
   			
   		dataPane.getChildren().addAll(lblHead, dataTable);
   		dataPane.setMargin(lblHead, spacing);

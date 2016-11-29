@@ -22,7 +22,7 @@ public class Planet {
     private double radius;
     private final double SIZE = 500; // just a standardized reference
     
-    public Animation animation;
+    private Animation animation;
     
     private String name;
     private String colorStr;
@@ -66,13 +66,13 @@ public class Planet {
 
         }
             
-        int speed = 0;
+        int speed;
         switch (speedInput){
-            case "slow" : speed = 8;
+            case "Slow" : speed = 9;
                 break;
-            case "medium" : speed = 6;
+            case "Medium" : speed = 7;
                 break;
-            case "fast" : speed = 1;
+            case "Fast" : speed = 5;
                 break;
             default:
             	speed = 10;
@@ -127,5 +127,7 @@ public class Planet {
     public String getSpeedStr() { return speedStr;}
     
     public String getOrbitStr() { return orbitStr;}
+    
+    public Animation getAnimation() { return animation; }
     
 }

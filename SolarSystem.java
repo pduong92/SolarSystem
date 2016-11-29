@@ -76,11 +76,11 @@ public class SolarSystem {
         	planets[index].getOrbit().centerYProperty().bind(subscene.heightProperty().divide(2));
         }
         
-        // adds planet to SolarSystem's pane.
+        //Adds planet to SolarSystem's pane.
         g.getChildren().addAll(planets[index].getPlanetBody(), planets[index].getOrbit());
         
         if(index != 0)
-        	planets[index].animation.play(); //starts animation
+        	planets[index].getAnimation().play(); //starts animation
     }
     
     public SubScene getSubScene() { return subscene; }
