@@ -55,20 +55,17 @@ public class SolarSystem {
      //   pane.setBackground(new Background(new BackgroundImage(bg, BackgroundRepeat.SPACE, BackgroundRepeat.SPACE, null, null)));
     }
     
-    //createPlanet method called by Actionlistener in GUI.
+    //CreatePlanet method called by Actionlistener in GUI.
     public void createPlanet(String radius, String orbit, String color, String speed, String name){
     	
     	int index = Integer.parseInt(orbit);
-    	//creates planet in planets array at index of 'orbit'
+    	//Creates planet in planets array at index of 'orbit'
         planets[index] = new Planet(radius, orbit, color, speed, name);
         
         if(index == 0)
         {  	
         	planets[index].getPlanetBody().setTranslateX(subscene.widthProperty().divide(2).getValue());
         	planets[index].getPlanetBody().setTranslateY(subscene.heightProperty().divide(2).getValue());
-        	
-        	//planets[index].getPlanetBody().setTranslateX(539.5);
-        	//planets[index].getPlanetBody().setTranslateY(210.5);
         }
         else
         {
@@ -80,7 +77,7 @@ public class SolarSystem {
         g.getChildren().addAll(planets[index].getPlanetBody(), planets[index].getOrbit());
         
         if(index != 0)
-        	planets[index].getAnimation().play(); //starts animation
+        	planets[index].getAnimation().play(); //Starts animation
     }
     
     public SubScene getSubScene() { return subscene; }

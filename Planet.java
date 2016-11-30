@@ -93,7 +93,7 @@ public class Planet {
     }
  
     
-    // creates orbital path
+    // Creates orbital path
     private Circle createCircle(double orbitSize) {
             Circle c = new Circle(orbitSize / 2);
             c.setFill(Color.TRANSPARENT);
@@ -101,7 +101,7 @@ public class Planet {
             return c;
     }
     
-    // defines planetary orbit
+    // Defines planetary orbit
     private Transition createTransition(Shape path, Shape3D node, Duration duration) {
             PathTransition t = new PathTransition(duration, path, node);
             t.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
