@@ -27,6 +27,8 @@ import javafx.geometry.Insets;
 
 import javafx.scene.SubScene;
 
+import javafx.scene.media.AudioClip; // music
+
 public class SolarSystemGUI extends Application{
 	
     private String[] sizes = {"Small", "Medium", "Large"};
@@ -261,9 +263,15 @@ public class SolarSystemGUI extends Application{
 	});
 		
     Scene scene = new Scene(fullPane, Color.WHITE);
-	primaryStage.setTitle("User Interface");
+	primaryStage.setTitle("Build Your Own Solar System");
 	primaryStage.setScene(scene);
 	primaryStage.show();
+	
+	// music
+    String musicFile = this.getClass().getResource("space.m4a").toExternalForm();
+    AudioClip music = new AudioClip(musicFile);
+    music.play();   
+	
     }
 	
     public static void main(String[] args) {
